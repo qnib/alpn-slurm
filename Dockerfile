@@ -11,7 +11,7 @@ RUN wget -qO- https://github.com/dun/munge/archive/munge-${MUNGE_VER}.tar.gz |ta
     make && make install
 #RUN wget -qO- https://github.com/SchedMD/slurm/archive/slurm-${SLURM_VER}.tar.gz |tar xzf - -C /opt/ && \
 #    mv /opt/slurm-slurm-${SLURM_VER} /opt/slurm/ 
-RUN apk add unzip && \
+RUN apk add unzip linux-headers && \
     wget -qO /tmp/slurm.zip https://github.com/SchedMD/slurm/archive/master.zip && \
     cd /opt/ && unzip /tmp/slurm.zip && \
     mv /opt/slurm-master /opt/slurm
