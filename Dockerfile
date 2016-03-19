@@ -1,6 +1,7 @@
 FROM qnib/alpn-base:edge
 
-ENV SLURM_VER=15-08-7-1 \
+#ENV SLURM_VER=master
+ENV SLURM_VER=slurm-16.05.0-0pre1 \
     MUNGE_VER=0.5.11
 RUN apk update && apk upgrade && \
     apk add vim wget tar g++ make libgcrypt-dev perl
@@ -10,12 +11,10 @@ RUN mkdir -p /opt && \
     cd /opt/munge/ && \
     ./configure && \
     make && make install
-#RUN wget -qO- https://github.com/SchedMD/slurm/archive/slurm-${SLURM_VER}.tar.gz |tar xzf - -C /opt/ && \
-#    mv /opt/slurm-slurm-${SLURM_VER} /opt/slurm/ 
-RUN \
-    wget -qO /tmp/slurm.zip https://github.com/SchedMD/slurm/archive/master.zip && \
-    cd /opt/ && unzip /tmp/slurm.zip && \
-    mv /opt/slurm-master /opt/slurm
+RUN wget -qO /tmp/slurm.zip https://codeload.github.com/SchedMD/slurm/zip/slurm-16-05-0-0pre1 \
+ && cd /opt/ && unzip /tmp/slurm.zip \  
+ && rm -f /tmp/slurm.zip \
+ && mv /opt/slurm-* /opt/slurm
 RUN apk add unzip linux-headers
 RUN cd /opt/slurm/ && \
     ./configure 
